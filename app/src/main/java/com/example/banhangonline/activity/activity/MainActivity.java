@@ -1,0 +1,160 @@
+package com.example.banhangonline.activity.activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
+
+import com.bumptech.glide.Glide;
+import com.example.banhangonline.R;
+import com.example.banhangonline.activity.adapter.LoaiSpAdapter;
+import com.example.banhangonline.activity.model.LoaiSp;
+import com.example.banhangonline.activity.retrofit.ApiBanHang;
+import com.example.banhangonline.activity.retrofit.RetrofitClient;
+import com.example.banhangonline.activity.utils.Utils;
+import com.google.android.material.navigation.NavigationView;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class MainActivity extends AppCompatActivity {
+
+    Toolbar toolbar;
+    ViewFlipper viewFlipper;
+    RecyclerView recyclerView;
+    NavigationView navigationView;
+    ListView listView;
+    DrawerLayout drawerLayout;
+    LoaiSpAdapter loaiSpAdapter;
+    List<LoaiSp> mangloaisp;
+ CompositeDisposable compositeDisposable =new CompositeDisposable();
+    ApiBanHang apiBanHang;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.toolbartrangchu);
+
+        apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
+
+        Anhxa();
+        Actionbar();
+
+        if(isConnected(this)){
+            Toast.makeText(getApplicationContext()," có Internet",Toast.LENGTH_LONG).show();
+            ActionbarViewFlipper();
+            getLoaiSanPham();
+
+
+
+        }else{
+            Toast.makeText(getApplicationContext(),"không có Internet",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private void ActionbarViewFlipper() {
+        ArrayList<String> mangquangcao = new ArrayList<>();
+        mangquangcao.add("https://i.ytimg.com/vi/vMVwdSp489E/maxresdefault.jpg");
+        mangquangcao.add("https://cdn.tgdd.vn/2022/06/banner/s22-800-200-800x200-1.png");
+        mangquangcao.add("https://cdn.tgdd.vn/2022/06/banner/poco40-800-200-800x200.png");
+        mangquangcao.add("https://cdn.tgdd.vn/2022/06/banner/800-200-800x200-105.png");
+
+        for (int i=0;i<mangquangcao.size();i++){
+            ImageView imageView = new ImageView(getApplicationContext());
+            Glide.with(getApplicationContext()).load(mangquangcao.get(i)).into(imageView);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            viewFlipper.addView(imageView);
+        }
+        viewFlipper.setFlipInterval(2000);
+        viewFlipper.setAutoStart(true);
+        Animation slide_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_in_right);
+        Animation slide_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out_right);
+        viewFlipper.setInAnimation(slide_in);
+        viewFlipper.setOutAnimation(slide_out);
+
+    }
+
+    private void getLoaiSanPham() {
+        compositeDisposable.add(apiBanHang.getLoaiSp()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSpModel ->  {
+                            if(loaiSpModel.isSuccess()){
+                                Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_SHORT).show();
+                                mangloaisp = loaiSpModel.getResult();
+                                mangloaisp.add(new LoaiSp("Đăng Xuất","https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
+                                loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(),mangloaisp);
+                                listView.setAdapter(loaiSpAdapter);
+                            }
+                        }
+                ));
+    }
+
+    private void Actionbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+
+    public void Anhxa() {
+
+        viewFlipper= findViewById(R.id.viewflipper);
+        recyclerView = findViewById(R.id.rcvtrangchu);
+        navigationView= findViewById(R.id.ngvtrangchu);
+        listView= findViewById(R.id.lvtrangchu);
+        drawerLayout=findViewById(R.id.drawlayouttrangchu);
+        //khoi tao list
+        mangloaisp = new ArrayList<>();
+        // khoi tao adapter
+        loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(),mangloaisp);
+
+        listView.setAdapter(loaiSpAdapter);
+
+
+
+
+    }
+    private boolean isConnected(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if(wifi !=null && wifi.isConnected()|| (mobile!=null && mobile.isConnected())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+}
