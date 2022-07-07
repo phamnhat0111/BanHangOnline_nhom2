@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,7 +22,9 @@ import android.widget.ViewFlipper;
 import com.bumptech.glide.Glide;
 import com.example.banhangonline.R;
 import com.example.banhangonline.activity.adapter.LoaiSpAdapter;
+import com.example.banhangonline.activity.adapter.SanPhamMoiAdapter;
 import com.example.banhangonline.activity.model.LoaiSp;
+import com.example.banhangonline.activity.model.SanPhamMoi;
 import com.example.banhangonline.activity.retrofit.ApiBanHang;
 import com.example.banhangonline.activity.retrofit.RetrofitClient;
 import com.example.banhangonline.activity.utils.Utils;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     List<LoaiSp> mangloaisp;
  CompositeDisposable compositeDisposable =new CompositeDisposable();
     ApiBanHang apiBanHang;
+    List<SanPhamMoi> mangSpMoi ;
+    SanPhamMoiAdapter spAdapter;
 
 
     @Override
@@ -63,12 +67,33 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext()," có Internet",Toast.LENGTH_LONG).show();
             ActionbarViewFlipper();
             getLoaiSanPham();
+            getSpMoi();
 
 
 
         }else{
             Toast.makeText(getApplicationContext(),"không có Internet",Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void getSpMoi() {
+        compositeDisposable.add(apiBanHang.getSpMoi()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        sanPhamMoiModel -> {
+                            if(sanPhamMoiModel.isSuccess()){
+                                mangSpMoi = sanPhamMoiModel.getResult();
+                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(),mangSpMoi);
+                                recyclerView.setAdapter(spAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(),"Không kết nối với server"+throwable.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                )
+
+        );
     }
 
 
@@ -127,15 +152,19 @@ public class MainActivity extends AppCompatActivity {
 
         viewFlipper= findViewById(R.id.viewflipper);
         recyclerView = findViewById(R.id.rcvtrangchu);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         navigationView= findViewById(R.id.ngvtrangchu);
         listView= findViewById(R.id.lvtrangchu);
         drawerLayout=findViewById(R.id.drawlayouttrangchu);
         //khoi tao list
         mangloaisp = new ArrayList<>();
-        // khoi tao adapter
-        loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(),mangloaisp);
-
-        listView.setAdapter(loaiSpAdapter);
+//        // khoi tao adapter
+//        loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(),mangloaisp);
+//
+//        listView.setAdapter(loaiSpAdapter);
+       mangSpMoi= new ArrayList<>();
 
 
 

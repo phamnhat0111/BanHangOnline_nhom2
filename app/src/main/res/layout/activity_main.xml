@@ -32,12 +32,14 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 <TextView
     android:layout_margin="5dp"
-    android:textColor="@color/black"
+    android:textColor="@color/red"
+    android:textStyle="bold"
     android:text="Sản Phẩm mới nhất"
-    android:textSize="20dp"
+    android:textSize="25dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -45,7 +47,9 @@
      <androidx.recyclerview.widget.RecyclerView
          android:id="@+id/rcvtrangchu"
          android:layout_width="match_parent"
-         android:layout_height="match_parent">
+         android:layout_height="match_parent"
+         android:layout_gravity="center"
+         android:background="@color/lime">
 
      </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
