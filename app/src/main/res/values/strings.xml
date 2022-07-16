@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BanHangOnline</string>
+    <string name="gi_25000">Giá: 25000 đ</string>
+    <string name="th_m_v_o_gi_h_ng">Thêm vào giỏ hàng</string>
 </resources>

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.banhangonline.R;
+import com.example.banhangonline.activity.Interface.ItemClickListener;
+import com.example.banhangonline.activity.activity.ChiTietActivity;
 import com.example.banhangonline.activity.model.SanPhamMoi;
 
 import java.text.DecimalFormat;
@@ -52,6 +54,18 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             myViewHolder.giasp.setText("Giá : " + decimalFormat.format(Double.parseDouble(sanPham.getGiasp()))+" Đ ");
             myViewHolder.mota.setText(sanPham.getMota());
             Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+            myViewHolder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onClick(View view, int pos, boolean isLongClick) {
+                    if(!isLongClick){
+                        //click
+                        Intent intent = new Intent(context, ChiTietActivity.class);
+                        intent.putExtra("chitiet",sanPham);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }else{
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -83,6 +97,7 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tensp,giasp,mota ;
         ImageView hinhanh;
+        private ItemClickListener itemClickListener;
 
         public MyViewHolder(View itemView){
             super(itemView);
@@ -93,9 +108,13 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemView.setOnClickListener(this);
         }
 
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
 
         @Override
         public void onClick(View view) {
+            itemClickListener.onClick(view, getAdapterPosition(),false);
         }
     }
 }
