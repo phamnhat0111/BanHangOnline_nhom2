@@ -2,4 +2,8 @@
     <string name="app_name">BanHangOnline</string>
     <string name="gi_25000">Giá: 25000 đ</string>
     <string name="th_m_v_o_gi_h_ng">Thêm vào giỏ hàng</string>
+    <string name="ng_nh_p">Đăng nhập</string>
+    <string name="email">Email</string>
+    <string name="pass">Pass</string>
+    <string name="ng_k">Đăng kí</string>
 </resources>

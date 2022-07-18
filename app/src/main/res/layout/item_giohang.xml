@@ -35,24 +35,26 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="5"
+                    android:id="@+id/item_giohang_gia"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_giohang_gia"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="7"
                     android:text="15000"
                     android:textSize="15sp"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:textColor="@android:color/holo_red_light" />
+
                 <ImageView
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_remove_24"
                     android:id="@+id/item_giohang_tru"/>
                 <TextView
                     android:gravity="center"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/item_giohang_soluong"
@@ -60,24 +62,24 @@
                     android:textSize="15sp"
                     android:textStyle="bold"/>
                 <ImageView
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
                     android:id="@+id/item_giohang_cong"/>
                 <ImageView
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_drag_handle_24" />
                 <TextView
-                    android:layout_weight="5"
+                    android:layout_weight="6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/item_giohang_giasp2"
                     android:text="25000 đ"
-                    android:gravity="center|center_vertical"
                     android:textSize="15sp"
+                    android:gravity="center|center_vertical"
                     android:layout_marginRight="5dp"
                     android:textColor="@android:color/holo_red_light"
                     android:textStyle="bold"/>
