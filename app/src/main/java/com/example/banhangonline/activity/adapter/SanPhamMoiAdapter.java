@@ -1,6 +1,7 @@
 package com.example.banhangonline.activity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.banhangonline.R;
+import com.example.banhangonline.activity.Interface.ItemClickListener;
+import com.example.banhangonline.activity.activity.ChiTietActivity;
 import com.example.banhangonline.activity.model.SanPhamMoi;
 import com.example.banhangonline.activity.utils.Utils;
 
@@ -42,12 +45,26 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
         holder.txtten.setText(sanPhamMoi.getTensp());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.txtgia.setText("Giá :" + decimalFormat.format(Double.parseDouble(sanPhamMoi.getGiasp()))+" Đ ");
-        if(sanPhamMoi.getHinhanh().contains("http")){
+        Glide.with(context).load(sanPhamMoi.getHinhanh()).into(holder.imghinhanh);
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int pos, boolean isLongClick) {
+                if(!isLongClick){
+                    //click
+                    Intent intent = new Intent(context, ChiTietActivity.class);
+                    intent.putExtra("chitiet",sanPhamMoi);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+        });
+        /*if(sanPhamMoi.getHinhanh().contains("http")){
             Glide.with(context).load(sanPhamMoi.getHinhanh()).into(holder.imghinhanh);
+
         }else{
             String hinh = Utils.BASE_URL + "images/"+sanPhamMoi.getHinhanh();
             Glide.with(context).load(hinh).into(holder.imghinhanh);
-        }
+        }*/
 //        holder.setItemClickListener(new ItemClickListener() {
 //            @Override
 //            public void onClick(View view, int pos, boolean isLongClick) {
@@ -71,7 +88,7 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtten,txtgia;
         ImageView imghinhanh;
-//        private ItemClickListener itemClickListener;
+        private ItemClickListener itemClickListener;
 
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
@@ -81,13 +98,13 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
             itemView.setOnClickListener(this);
         }
 
-//        public void setItemClickListener(ItemClickListener itemClickListener) {
-//            this.itemClickListener = itemClickListener;
-//        }
+       public void setItemClickListener(ItemClickListener itemClickListener) {
+          this.itemClickListener = itemClickListener;
+        }
 
         @Override
         public void onClick(View view) {
-//            itemClickListener.onClick(view,getAdapterPosition(),false);
+            itemClickListener.onClick(view,getAdapterPosition(),false);
         }
     }
 
