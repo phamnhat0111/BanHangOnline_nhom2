@@ -21,6 +21,7 @@ import com.example.banhangonline.activity.utils.Utils;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class ChiTietActivity extends AppCompatActivity {
     TextView tensp, giasp, mota;
@@ -30,6 +31,7 @@ public class ChiTietActivity extends AppCompatActivity {
     Toolbar toolbar;
     SanPhamMoi sanPhamMoi;
     NotificationBadge badge;
+    List<GioHang> manggiohang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
