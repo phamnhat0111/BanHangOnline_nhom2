@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:id="@+id/email"
             android:inputType="textEmailAddress"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:id="@+id/pass"
             android:hint="Nhập mật khẩu"/>
     </com.google.android.material.textfield.TextInputLayout>
     <CheckBox
@@ -71,6 +73,7 @@
             android:text="Nếu chưa có tài khoản?"
             android:textSize="15dp"/>
         <TextView
+            android:id="@+id/txtdangki"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đăng kí"
@@ -85,19 +88,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_marginHorizontal="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnLogin"
             android:text="Đăng nhập"
+            android:background="@drawable/background_button"
             android:layout_weight="1"/>
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_marginHorizontal="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnCancel"
             android:text="Huỷ"
+            android:background="@drawable/background_button"
             android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

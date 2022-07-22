@@ -6,4 +6,5 @@
     <string name="email">Email</string>
     <string name="pass">Pass</string>
     <string name="ng_k">Đăng kí</string>
+    <string name="repass">Nhập lại mật khẩu</string>
 </resources>
