@@ -4,11 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.banhangonline.R;
@@ -17,6 +18,7 @@ import com.example.banhangonline.activity.retrofit.RetrofitClient;
 import com.example.banhangonline.activity.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,24 +27,28 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class DangKiActivity extends AppCompatActivity {
-    EditText email,pass, repass,mobile,username;
-    AppCompatButton button;
+public class DangKyActivity extends AppCompatActivity {
+    TextView email, pass, repass,username, mobile;
+    AppCompatButton btndangki;
+    FirebaseAuth firebaseAuth;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    FirebaseAuth firebaseAuth;
+    FirebaseApp firebaseApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dang_ki);
+        setContentView(R.layout.activity_dang_ky);
+         firebaseApp = FirebaseApp.initializeApp(DangKyActivity.this);
+
         initView();
         initControll();
     }
 
     private void initControll() {
-        button.setOnClickListener(new View.OnClickListener() {
+        btndangki.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dangKi();
             }
         });
@@ -59,21 +65,21 @@ public class DangKiActivity extends AppCompatActivity {
         }
         else if(TextUtils.isEmpty(str_user)){
             Toast.makeText(getApplicationContext(),"Bạn chưa nhập tên tài khoản",Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(str_mobile)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập số điện thoại",Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(str_pass)){
             Toast.makeText(getApplicationContext(),"Bạn chưa nhập mật khẩu",Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(str_repass)){
             Toast.makeText(getApplicationContext(),"Bạn chưa nhập lại mật khẩu",Toast.LENGTH_SHORT).show();
         }
-
+        else if(TextUtils.isEmpty(str_mobile)){
+            Toast.makeText(getApplicationContext(),"Bạn chưa nhập số điện thoại",Toast.LENGTH_SHORT).show();
+        }
         else{
             if(str_pass.equals(str_repass)){
-                firebaseAuth = FirebaseAuth.getInstance();
+
+                firebaseAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(DangKyActivity.this));
                 firebaseAuth.createUserWithEmailAndPassword(str_email,str_pass)
-                        .addOnCompleteListener(DangKiActivity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(DangKyActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
@@ -119,15 +125,13 @@ public class DangKiActivity extends AppCompatActivity {
 
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
-
-        email=findViewById(R.id.email);
-        username=findViewById(R.id.username);
-        mobile=findViewById(R.id.mobile);
-        pass=findViewById(R.id.pass);
-        repass=findViewById(R.id.repass);
-        button=findViewById(R.id.btndangki);
+        email = findViewById(R.id.edemail);
+        pass = findViewById(R.id.edpass);
+        repass = findViewById(R.id.edrepass);
+        username = findViewById(R.id.eduser);
+        mobile = findViewById(R.id.edmobile);
+        btndangki = findViewById(R.id.btndangky);
     }
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();
