@@ -84,11 +84,12 @@ public class DangKyActivity extends AppCompatActivity {
                         .subscribe(
                                 userModel -> {
                                     if(userModel.isSuccess()){
-//                                        Utils.user_current=userModel.getResult().get(0);
-//                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                                        startActivity(intent);
-//                                        finish();
+                                        Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
+                                        startActivity(intent);
                                         Toast.makeText(DangKyActivity.this, "thành công", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(DangKyActivity.this, " Email da ton tai ", Toast.LENGTH_SHORT).show();
                                     }
                                 },
                                 throwable -> {

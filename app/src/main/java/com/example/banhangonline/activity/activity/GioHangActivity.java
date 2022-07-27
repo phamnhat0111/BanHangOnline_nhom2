@@ -43,6 +43,7 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     private void tinhTongTien() {
+        tongtiensp = 0;
         for(int i=0;i<Utils.manggiohang.size();i++){
             tongtiensp=tongtiensp+Utils.manggiohang.get(i).getGiasp()*Utils.manggiohang.get(i).getSoluong();
         }
