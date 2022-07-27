@@ -63,7 +63,7 @@ public class DangNhapActivity extends AppCompatActivity {
                                             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                             startActivity(intent);
                                             finish();
-                                            //Toast.makeText(DangNhapActivity.this, "", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(DangNhapActivity.this, "thành công", Toast.LENGTH_SHORT).show();
                                         }
                                     },
                                     throwable -> {

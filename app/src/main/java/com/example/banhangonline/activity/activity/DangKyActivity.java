@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.banhangonline.R;
+import com.example.banhangonline.activity.adapter.SanPhamMoiAdapter;
 import com.example.banhangonline.activity.retrofit.ApiBanHang;
 import com.example.banhangonline.activity.retrofit.RetrofitClient;
 import com.example.banhangonline.activity.utils.Utils;
@@ -28,18 +30,18 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DangKyActivity extends AppCompatActivity {
-    TextView email, pass, repass,username, mobile;
+    EditText email, pass, repass,username, mobile;
     AppCompatButton btndangki;
     FirebaseAuth firebaseAuth;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    FirebaseApp firebaseApp;
+    //FirebaseApp firebaseApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_ky);
-         firebaseApp = FirebaseApp.initializeApp(DangKyActivity.this);
+         //firebaseApp = FirebaseApp.initializeApp(DangKyActivity.this);
 
         initView();
         initControll();
@@ -76,52 +78,56 @@ public class DangKyActivity extends AppCompatActivity {
         }
         else{
             if(str_pass.equals(str_repass)){
-
-                firebaseAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(DangKyActivity.this));
-                firebaseAuth.createUserWithEmailAndPassword(str_email,str_pass)
-                        .addOnCompleteListener(DangKyActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    if(user!=null){
-                                        postData(str_email,str_pass,str_user,str_mobile,user.getUid());
+                compositeDisposable.add(apiBanHang.dangKi(str_email,str_user,str_pass, str_mobile)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                userModel -> {
+                                    if(userModel.isSuccess()){
+//                                        Utils.user_current=userModel.getResult().get(0);
+//                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                                        startActivity(intent);
+//                                        finish();
+                                        Toast.makeText(DangKyActivity.this, "thành công", Toast.LENGTH_SHORT).show();
                                     }
-                                } else {
-                                    Toast.makeText(getApplicationContext(),"Email đã tồn tại",Toast.LENGTH_LONG).show();
+                                },
+                                throwable -> {
+                                    Toast.makeText(DangKyActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
+                        ));
+
             }else{
                 Toast.makeText(getApplicationContext(),"Mật khẩu chưa khớp",Toast.LENGTH_SHORT).show();
             }
+//            Intent intent= new Intent(DangKyActivity.this, DangNhapActivity.class);
+//            startActivity(intent);
         }
 
     }
 
-    private  void postData(String str_email,String str_pass,String str_user,String str_mobile, String uid){
-        // post data
-        compositeDisposable.add(apiBanHang.dangKi(str_email,str_pass,str_user,str_mobile,uid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        userModel -> {
-                            if(userModel.isSuccess()){
-                                Utils.user_current.setEmail(str_email);
-                                Utils.user_current.setPass(str_pass);
-                                Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }else{
-                                Toast.makeText(getApplicationContext(),userModel.getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-                        },
-                        throwable -> {
-                            Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                ));
-
-    }
+//    private  void postData(String str_email,String str_pass,String str_user,String str_mobile){
+//        // post data
+//        compositeDisposable.add(apiBanHang.dangKi(str_email,str_pass,str_user,str_mobile)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                        userModel -> {
+//                            if(userModel.isSuccess()){
+//                                Utils.user_current.setEmail(str_email);
+//                                Utils.user_current.setPass(str_pass);
+//                                Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                            }else{
+//                                Toast.makeText(getApplicationContext(),userModel.getMessage(),Toast.LENGTH_SHORT).show();
+//                            }
+//                        },
+//                        throwable -> {
+//                            Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
+//                        }
+//                ));
+//
+//    }
 
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
