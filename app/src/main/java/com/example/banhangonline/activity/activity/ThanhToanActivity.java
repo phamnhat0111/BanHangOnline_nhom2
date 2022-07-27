@@ -20,6 +20,8 @@ import com.example.banhangonline.activity.utils.Utils;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Scheduler;
@@ -27,7 +29,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ThanhToanActivity extends AppCompatActivity {
-Toolbar toolbar;
+    Toolbar toolbar;
     TextView txtTongTien, txtSdtDat, txtEmaiDat ;
     EditText eddiachi;
     AppCompatButton btndathang;
@@ -44,35 +46,41 @@ Toolbar toolbar;
         initControl();
     }
 
+    private void countItem() {
+        totalItem = 0;
+        for(int i=0;i<Utils.mangmuahang.size();i++){
+            totalItem = totalItem+ Utils.mangmuahang.get(i).getSoluong();
+        }
+    }
+
     private void initControl() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 finish();
             }
         });
-        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                     tongtien = getIntent().getLongExtra("tongtien",0);
-                     txtTongTien.setText(decimalFormat.format(tongtien));
-                     txtEmaiDat.setText(Utils.user_current.getEmail());
-                     txtSdtDat.setText(Utils.user_current.getMobile());
 
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        tongtien =getIntent().getLongExtra("tongtien",0);
+        txtTongTien.setText((decimalFormat.format(tongtien) + " Đồng "));
+        txtSdtDat.setText(Utils.user_current.getMobile());
+        txtEmaiDat.setText(Utils.user_current.getEmail());
 
         btndathang.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-               String str_diachi = eddiachi.getText().toString().trim();
-                if (TextUtils.isEmpty(str_diachi)) {
+            public void onClick(View view) {
+                String str_diachi = eddiachi.getText().toString().trim();
+                if(TextUtils.isEmpty(str_diachi)){
                     Toast.makeText(getApplicationContext(),"Bạn chưa nhập địa chỉ",Toast.LENGTH_SHORT).show();
-
-                }
-                else {
+                }else {
                     // post data
                     String str_email = Utils.user_current.getEmail() ;
                     String str_sdt = Utils.user_current.getMobile();
                     int iduser = Utils.user_current.getId();
+
                     Log.d("test", new Gson().toJson(Utils.mangmuahang));
                     compositeDisposable.add(apiBanHang.creatOrder(str_email,str_sdt,String.valueOf(tongtien),iduser,str_diachi,totalItem,new Gson().toJson(Utils.mangmuahang))
                             .subscribeOn(Schedulers.io())
@@ -90,16 +98,11 @@ Toolbar toolbar;
                                     }
                             )
                     );
+
                 }
+
             }
         });
-    }
-
-    private void countItem() {
-        totalItem = 0;
-        for(int i=0;i<Utils.mangmuahang.size();i++){
-            totalItem = totalItem+ Utils.mangmuahang.get(i).getSoluong();
-        }
     }
 
 

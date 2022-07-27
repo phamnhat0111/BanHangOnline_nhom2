@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.activity.XemDonActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.activity.DangKyActivity"
             android:exported="false" />
         <activity
@@ -46,7 +49,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.activity.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

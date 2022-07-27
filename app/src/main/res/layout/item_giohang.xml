@@ -84,6 +84,11 @@
                     android:textColor="@android:color/holo_red_light"
                     android:textStyle="bold"/>
             </LinearLayout>
+            <CheckBox
+                android:padding="5dp"
+                android:id="@+id/item_giohang_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 
