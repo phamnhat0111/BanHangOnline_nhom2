@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.activity.MainActivity">
+    tools:context=".appbanhang.activity.MainActivity">
 
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawlayouttrangchu"

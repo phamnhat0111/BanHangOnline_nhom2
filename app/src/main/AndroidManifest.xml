@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.banhangonline">
+    package="com.example.manager">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,16 +18,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.activity.XemDonActivity"
+            android:name=".appbanhang.activity.ThemSPActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.activity.DangKyActivity"
+            android:name=".appbanhang.activity.QuanLiActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.activity.ThanhToanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.activity.DangNhapActivity"
+            android:name=".appbanhang.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,19 +33,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.activity.GioHangActivity"
+            android:name=".appbanhang.activity.XemDonActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.activity.ChiTietActivity"
+            android:name=".appbanhang.activity.DangKyActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.activity.DienThoaiActivity"
+            android:name=".appbanhang.activity.ThanhToanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appbanhang.activity.DangNhapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appbanhang.activity.GioHangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appbanhang.activity.ChiTietActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appbanhang.activity.DienThoaiActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.activity.LaptopActivity"
+            android:name=".appbanhang.activity.LaptopActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.activity.MainActivity"
+            android:name=".appbanhang.activity.MainActivity"
             android:exported="false" />
     </application>
 

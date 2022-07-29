@@ -4,7 +4,7 @@ $email = $_POST['email'];
 $pass = $_POST['pass'];
 $username = $_POST['username'];
 $mobile = $_POST['mobile'];
-$uid = $_POST['uid'];
+
 
 
 // check data 
@@ -22,7 +22,7 @@ if($numrow > 0){
 }
 else{
 	// 
-	$query = 'INSERT INTO `user`(`email`, `pass`, `username`, `mobile`,`uid`) VALUES ("'.$email.'","'.$pass.'","'.$username.'","'.$mobile.'","'.$uid.'")';
+	$query = 'INSERT INTO `user`(`email`, `pass`, `username`, `mobile`) VALUES ("'.$email.'","'.$pass.'","'.$username.'","'.$mobile.'")';
 	$data = mysqli_query($conn, $query);
 
 	if ($data==true) {

@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Du_An/BanHangOnline_nhom2/app/src/main/res/layout/activity_chi_tiet.xml" value="0.18795289855072464" />
+        <entry key="..\:/Du_An/BanHangOnline_nhom2/app/src/main/res/layout/activity_dien_thoai.xml" value="0.18795289855072464" />
+        <entry key="..\:/Du_An/BanHangOnline_nhom2/app/src/main/res/layout/activity_quan_li.xml" value="0.5023183925811437" />
+        <entry key="..\:/Du_An/BanHangOnline_nhom2/app/src/main/res/layout/activity_splash.xml" value="0.18795289855072464" />
+        <entry key="..\:/Du_An/BanHangOnline_nhom2/app/src/main/res/layout/activity_them_spactivity.xml" value="0.264" />
         <entry key="..\:/Duan1/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Duan1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2555" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/drawable/ic_baseline_repeat_24.xml" value="0.2265" />
@@ -10,14 +15,10 @@
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_dang_ki.xml" value="0.22826086956521738" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_dang_ky.xml" value="0.1" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_dien_thoai.xml" value="0.1" />
-        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_gio_hang.xml" value="0.1" />
+        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_gio_hang.xml" value="0.10989583333333333" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_thanh_toan.xml" value="0.1" />
-        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/activity_xem_don.xml" value="0.24592391304347827" />
-        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_chitiet.xml" value="0.1" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_dienthoai.xml" value="0.2" />
-        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_donhang.xml" value="0.24592391304347827" />
-        <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_giohang.xml" value="0.24592391304347827" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_loading.xml" value="0.10989583333333333" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_sanpham.xml" value="0.2" />
         <entry key="..\:/Duan1_nhom2/BanHangOnline_nhom2/app/src/main/res/layout/item_sp_moi.xml" value="0.16" />
