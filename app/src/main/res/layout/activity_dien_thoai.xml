@@ -11,7 +11,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar_dt"
         app:title="Điện Thoại"
-        android:background="@color/purple_200">
+        app:titleTextColor="@color/white"
+        android:background="@color/mautoolbar">
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -22,5 +23,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_dt" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_dt"
+        android:background="@color/maunen"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

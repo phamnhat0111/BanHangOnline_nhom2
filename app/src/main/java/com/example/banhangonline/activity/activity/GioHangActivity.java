@@ -1,6 +1,7 @@
 package com.example.banhangonline.activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,66 +27,70 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class GioHangActivity extends AppCompatActivity {
-    TextView giohangtrong,tongtien;
+    TextView giohangtrong, tongtien;
+    AppCompatButton btnthanhtoan;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    Button btnmuahang;
-    GioHangAdapter adapter ;
-    long tongtiensp =0;
-
+    GioHangAdapter gioHangAdapter;
+    long tongTienSp ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gio_hang);
         initView();
-        initControl();
-        tinhTongTien();
+        intitControl();
+        thanhToan();
     }
 
-    private void tinhTongTien() {
-//        tongtiensp = 0;
-        for(int i=0;i<Utils.manggiohang.size();i++){
-            tongtiensp=tongtiensp+Utils.manggiohang.get(i).getGiasp()*Utils.manggiohang.get(i).getSoluong();
+    private void thanhToan() {
+        tongTienSp =0;
+        for(int i = 0;i<Utils.mangmuahang.size();i++){
+            tongTienSp = tongTienSp + Utils.mangmuahang.get(i).getGiasp()*Utils.mangmuahang.get(i).getSoluong();
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        tongtien.setText(decimalFormat.format(tongtiensp));
+        tongtien.setText(decimalFormat.format(tongTienSp) + " Đồng ");
     }
 
-    private void initControl() {
+    private void intitControl() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 finish();
             }
         });
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         if(Utils.manggiohang.size()==0){
             giohangtrong.setVisibility(View.VISIBLE);
+
         }else{
-            adapter = new GioHangAdapter(getApplicationContext(),Utils.manggiohang);
-            recyclerView.setAdapter(adapter);
+            gioHangAdapter = new GioHangAdapter(getApplicationContext(),Utils.manggiohang);
+            recyclerView.setAdapter(gioHangAdapter);
+
         }
 
-        btnmuahang.setOnClickListener(new View.OnClickListener() {
+        btnthanhtoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),ThanhToanActivity.class);
-                intent.putExtra("tongtien",tongtiensp);
+                intent.putExtra("tongtien",tongTienSp);
+                Utils.manggiohang.clear();
                 startActivity(intent);
             }
         });
+
+
     }
 
     private void initView() {
         giohangtrong = findViewById(R.id.txtgiohangtrong);
-        tongtien=findViewById(R.id.txttongtien);
-        toolbar=findViewById(R.id.toobar);
-        recyclerView =findViewById(R.id.recycleviewgiohang);
-        btnmuahang=findViewById(R.id.btnmuahang);
+        toolbar = findViewById(R.id.toobar);
+        recyclerView= findViewById(R.id.recycleviewgiohang);
+        tongtien = findViewById(R.id.txttongtien);
+        btnthanhtoan = findViewById(R.id.btnmuahang);
     }
 
     @Override
@@ -99,10 +104,10 @@ public class GioHangActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-    public  void eventTinhTien(TinhTongEvent event){
-        if(event!=null){
-            tinhTongTien();
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void eventTinhTien(TinhTongEvent event){
+        if(event !=null){
+            thanhToan();
         }
     }
 }

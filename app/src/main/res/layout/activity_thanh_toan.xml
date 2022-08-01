@@ -137,7 +137,7 @@
         android:layout_marginTop="25dp"
         android:text="Đặt Hàng"
         android:id="@+id/btndathang"
-        android:background="@color/red"
+        android:background="@drawable/button"
         android:textColor="@color/white"
 
         android:layout_height="wrap_content"/>

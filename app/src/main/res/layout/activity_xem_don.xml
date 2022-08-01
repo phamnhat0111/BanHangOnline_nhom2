@@ -11,6 +11,8 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar_xemdon"
+        android:background="@color/mautoolbar"
+        app:titleTextColor="@color/white"
         app:title="Đơn Hàng">
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView

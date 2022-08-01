@@ -1,6 +1,7 @@
 package com.example.banhangonline.activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class ChiTietActivity extends AppCompatActivity {
     TextView tensp, giasp, mota;
-    Button btnthem;
+    AppCompatButton btnthem;
     ImageView imghinhanh;
     Spinner spinner;
     Toolbar toolbar;

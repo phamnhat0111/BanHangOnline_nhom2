@@ -17,9 +17,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbartrangchu"
             app:title="Trang Chủ"
-            android:background="@color/purple_200"
+            android:background="@color/mautoolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/white">
             <FrameLayout
                 android:id="@+id/framegiohang"
                 android:layout_marginRight="10dp"
@@ -48,6 +49,7 @@
             android:layout_height="200dp">
 
         </ViewFlipper>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -68,7 +70,7 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:layout_gravity="center"
-         android:background="@color/lime">
+         android:background="@color/maunen">
 
      </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

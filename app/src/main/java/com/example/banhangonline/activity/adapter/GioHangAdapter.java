@@ -70,6 +70,8 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                         if(Utils.mangmuahang.get(i).getIdsp() == gioHang.getIdsp()){
                             Utils.mangmuahang.remove(i);
                             EventBus.getDefault().postSticky( new TinhTongEvent());
+                            long gia= 0;
+
                         }
                     }
                 }
@@ -99,6 +101,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                                 Utils.manggiohang.remove(pos);
                                 notifyDataSetChanged();
                                 EventBus.getDefault().postSticky( new TinhTongEvent());
+                                long gia= 0;
                             }
                         });
                         builder.setNegativeButton("Hủy ", new DialogInterface.OnClickListener() {

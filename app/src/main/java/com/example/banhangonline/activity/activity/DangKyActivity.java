@@ -32,7 +32,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DangKyActivity extends AppCompatActivity {
     EditText email, pass, repass,username, mobile;
     AppCompatButton btndangki;
-    FirebaseAuth firebaseAuth;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     //FirebaseApp firebaseApp;

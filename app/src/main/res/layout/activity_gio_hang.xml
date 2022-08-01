@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtgiohangtrong"
         android:text="Giỏ hàng trống"
+        android:textColor="@color/white"
         android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,14 +22,16 @@
         android:id="@+id/toobar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#36DD07"
+        android:background="@color/mautoolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Giỏ hàng"
+        app:titleTextColor="@color/white"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/red"
         android:id="@+id/recycleviewgiohang"
         app:layout_constraintTop_toBottomOf="@id/toobar"
         app:layout_constraintBottom_toTopOf="@id/layout1"
@@ -62,7 +65,7 @@
             android:textStyle="bold"
             />
     </LinearLayout>
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_marginBottom="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -70,5 +73,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnmuahang"
         android:text="Mua hàng"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
