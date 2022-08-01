@@ -68,9 +68,14 @@ dependencies {
 
     // lotte
     implementation 'com.airbnb.android:lottie:4.2.2'
-    // neumorphirm
+//    // neumorphirm
+//    implementation 'com.github.fornewid:neumorphism:0.3.0'
+//    //image picker
+//    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    //neumorphism
     implementation 'com.github.fornewid:neumorphism:0.3.0'
-    //image picker
+
+    //imagepicker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
 
 }
