@@ -2,6 +2,7 @@ package com.example.manager.appbanhang.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,24 +38,25 @@ import soup.neumorphism.NeumorphCardView;
 
 
 public class QuanLiActivity extends AppCompatActivity {
-    ImageView img_them;
-    RecyclerView recyclerView;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    ApiBanHang apiBanHang;
-    List<SanPhamMoi> mangSpMoi;
+    ImageView img_themsp;
+    RecyclerView recyclerViewQuanLi;
+    List<SanPhamMoi> list;
     SanPhamMoiAdapter spAdapter;
     SanPhamMoi sanPhamSuaXoa;
+    ApiBanHang apiBanHang;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_li);
-        ApiBanHang apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
+        apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         initView();
         initControl();
         getSpMoi();
     }
+
     private void initControl() {
-        img_them.setOnClickListener(new View.OnClickListener() {
+        img_themsp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),ThemSPActivity.class);
@@ -62,6 +64,52 @@ public class QuanLiActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initView() {
+        recyclerViewQuanLi = findViewById(R.id.recycleview_ql);
+        img_themsp = findViewById(R.id.img_themsp);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
+        recyclerViewQuanLi.setHasFixedSize(true);
+        recyclerViewQuanLi.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getTitle().equals("Sửa")){
+            suaSanPham();
+        }else if(item.getTitle().equals("Xóa")){
+            xoaSanPham();
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void suaSanPham() {
+        Intent intent = new Intent(getApplicationContext(),ThemSPActivity.class);
+        intent.putExtra("sua",sanPhamSuaXoa);
+        startActivity(intent);
+    }
+
+    private void xoaSanPham() {
+        compositeDisposable.add(apiBanHang.XoaSanPham(sanPhamSuaXoa.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        messageModel ->  {
+                            if(messageModel.isSuccess()){
+                                Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
+                                getSpMoi();
+                            }else{
+                                Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                )
+
+        );
+    }
+
     private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()
                 .subscribeOn(Schedulers.io())
@@ -69,9 +117,9 @@ public class QuanLiActivity extends AppCompatActivity {
                 .subscribe(
                         sanPhamMoiModel -> {
                             if(sanPhamMoiModel.isSuccess()){
-                                mangSpMoi = sanPhamMoiModel.getResult();
-                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(),mangSpMoi);
-                                recyclerView.setAdapter(spAdapter);
+                                list = sanPhamMoiModel.getResult();
+                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(),list);
+                                recyclerViewQuanLi.setAdapter(spAdapter);
                             }
                         },
                         throwable -> {
@@ -82,57 +130,13 @@ public class QuanLiActivity extends AppCompatActivity {
         );
     }
 
-    private void initView() {
-        img_them = findViewById(R.id.img_them);
-        recyclerView = findViewById(R.id.recycleview_ql);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if(item.getTitle().equals("Sửa")){
-            suaSanPham();
-        }else if(item.getTitle().equals("Xóa")){
-            xoaSanPham();
-        }
-
-        return super.onContextItemSelected(item);
-    }
-
-    private void xoaSanPham() {
-        compositeDisposable.add(apiBanHang.xoaSanPham(sanPhamSuaXoa.getId())
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                messageModel -> {
-                    if(messageModel.isSuccess()){
-                        Toast.makeText(getApplicationContext(),messageModel.getMessage(), Toast.LENGTH_SHORT).show();
-                        getSpMoi();
-                    }else{
-                        Toast.makeText(getApplicationContext(),messageModel.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                },
-                throwable -> {
-                    Log.d("log",throwable.getMessage());
-                }
-        ));
-    }
-
-    private void suaSanPham() {
-        Intent intent = new Intent(getApplicationContext(),ThemSPActivity.class);
-        intent.putExtra("sua",sanPhamSuaXoa);
-        startActivity(intent);
-    }
 
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();
         super.onDestroy();
     }
+
     @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
     public void eventSuaXoa(SuaXoaEvent event){
         if(event != null){
@@ -144,7 +148,6 @@ public class QuanLiActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-
     }
 
     @Override

@@ -72,8 +72,8 @@ public interface ApiBanHang {
 
     @POST("xoa.php")
     @FormUrlEncoded
-    Observable<MessageModel> xoaSanPham(
-            @Field("id") int id
+    Observable<MessageModel> XoaSanPham(
+            @Field("id")  int id
     );
 
     @POST("insertsp.php")

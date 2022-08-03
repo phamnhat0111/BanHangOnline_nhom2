@@ -4,29 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".appbanhang.activity.QuanLiActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbar_quanli"
-        app:title="Quản lí"
-        android:background="@color/purple_200">
-        <ImageView
-            android:id="@+id/img_them"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_baseline_add_24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/toolbar_ql"
+        app:title="Quản Lí"
+        android:background="@color/mautoolbar">
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/img_themsp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_baseline_add_24"
+            />
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleview_ql"
-        android:layout_margin="5dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_quanli"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:id="@+id/recycleview_ql"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_ql"
+        android:layout_margin="5dp"
+        />
 
 
 
