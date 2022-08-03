@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.manager.R;
 import com.example.manager.appbanhang.model.MessageModel;
+import com.example.manager.appbanhang.model.SanPhamMoi;
 import com.example.manager.appbanhang.retrofit.ApiBanHang;
 import com.example.manager.appbanhang.retrofit.RetrofitClient;
 import com.example.manager.appbanhang.utils.Utils;
@@ -47,6 +48,9 @@ public class ThemSPActivity extends AppCompatActivity {
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     String mediaPath;
+    SanPhamMoi sanPhamSua;
+    boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,23 @@ public class ThemSPActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initView();
         initData();
+        Intent intent = getIntent();
+        sanPhamSua = (SanPhamMoi) intent.getSerializableExtra("sua");
+        if (sanPhamSua == null){
+            // them mới
+            flag = false;
+        } else {
+            //sua
+            flag = true;
+            binding.btnthem.setText("Sửa sản phẩm");
+            // show data
+            binding.mota.setText(sanPhamSua.getMota());
+            binding.giasanpham.setText(sanPhamSua.getGiasp());
+            binding.tensanpham.setText(sanPhamSua.getTensp());
+            binding.hinhanh.setText(sanPhamSua.getHinhanh());
+            binding.spinnerLoai.setSelection(sanPhamSua.getLoai());
+
+        }
     }
 
     private void initData() {
@@ -78,7 +99,12 @@ public class ThemSPActivity extends AppCompatActivity {
         binding.btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                themsanpham();
+                if (flag == false){
+                    themsanpham();
+                }else {
+                    suaSanPham();
+                }
+
             }
         });
         binding.imgcamera.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +117,35 @@ public class ThemSPActivity extends AppCompatActivity {
                         .start();
             }
         });
+    }
+
+    private void suaSanPham() {
+
+        String str_ten = binding.tensanpham.getText().toString().trim();
+        String str_gia = binding.giasanpham.getText().toString().trim();
+        String str_mota = binding.mota.getText().toString().trim();
+        String str_hinhanh = binding.hinhanh .getText().toString().trim();
+        if(TextUtils.isEmpty(str_ten)||TextUtils.isEmpty(str_gia)||TextUtils.isEmpty(str_mota)||TextUtils.isEmpty(str_hinhanh)|| loai==0){
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+        }else{
+            compositeDisposable.add(apiBanHang.updatesp(str_ten, str_gia,str_hinhanh,str_mota,loai,sanPhamSua.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            messageModel -> {
+                                if(messageModel.isSuccess()){
+                                    Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(this, messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                            },
+                            throwable -> {
+                                Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                    ));
+        }
+
     }
 
     @Override

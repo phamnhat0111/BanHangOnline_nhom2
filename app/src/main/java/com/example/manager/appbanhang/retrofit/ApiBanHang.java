@@ -64,6 +64,18 @@ public interface ApiBanHang {
             @Field("iduser") int iduser
     );
 
+    @POST("timkiem.php")
+    @FormUrlEncoded
+    Observable<MessageModel> search(
+            @Field("search") String search
+    );
+
+    @POST("xoa.php")
+    @FormUrlEncoded
+    Observable<MessageModel> xoaSanPham(
+            @Field("id") int id
+    );
+
     @POST("insertsp.php")
     @FormUrlEncoded
     Observable<MessageModel> insertSp(
@@ -73,6 +85,18 @@ public interface ApiBanHang {
             @Field("mota") String mota,
             @Field("loai") int id
     );
+
+    @POST("updatesp.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updatesp(
+            @Field("tensp") String tensp,
+            @Field("gia") String gia,
+            @Field("hinhanh") String hinhanh,
+            @Field("mota") String mota,
+            @Field("loai") int idloai,
+            @Field("id") int id
+    );
+
     @Multipart
     @POST("upload.php")
     Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
