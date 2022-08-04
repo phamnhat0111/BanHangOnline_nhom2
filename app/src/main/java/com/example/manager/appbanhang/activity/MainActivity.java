@@ -28,6 +28,8 @@ import com.example.manager.appbanhang.adapter.LoaiSpAdapter;
 import com.example.manager.appbanhang.adapter.SanPhamMoiAdapter;
 import com.example.manager.appbanhang.model.LoaiSp;
 import com.example.manager.appbanhang.model.SanPhamMoi;
+import com.example.manager.appbanhang.model.User;
+import com.example.manager.appbanhang.model.UserModel;
 import com.example.manager.appbanhang.retrofit.ApiBanHang;
 import com.example.manager.appbanhang.retrofit.RetrofitClient;
 import com.example.manager.appbanhang.utils.Utils;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     SanPhamMoiAdapter spAdapter;
     NotificationBadge badge;
     FrameLayout frameLayout;
+    ImageView search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +111,17 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(donhang);
                         break;
                     case 6:
-                        Intent quanli = new Intent(getApplicationContext(),QuanLiActivity.class);
-                        startActivity(quanli);
-                        break;
+                        if(Utils.user_current.getEmail().contains("admin")){
+                            Intent quanli = new Intent(getApplicationContext(),QuanLiActivity.class);
+                            startActivity(quanli);
+                            break;
+                        }
+                        else {
+                            Intent dangxuat = new Intent(getApplicationContext(),DangNhapActivity.class);
+                            startActivity(dangxuat);
+                            break;
+
+                        }
                     case 7:
                         Intent dangxuat = new Intent(getApplicationContext(),DangNhapActivity.class);
                         startActivity(dangxuat);
@@ -172,10 +183,17 @@ public class MainActivity extends AppCompatActivity {
                             if(loaiSpModel.isSuccess()){
                                 Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_SHORT).show();
                                 mangloaisp = loaiSpModel.getResult();
-                                mangloaisp.add(new LoaiSp("Quản lí",""));
-                                mangloaisp.add(new LoaiSp("Đăng Xuất","https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
-                                loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(),mangloaisp);
-                                listView.setAdapter(loaiSpAdapter);
+                                if(Utils.user_current.getEmail().contains("admin")){
+                                    mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons.flaticon.com/png/512/3273/premium/3273070.png?token=exp=1659624043~hmac=d919ff0ed1d91fb8b72943628b19161d"));
+                                    mangloaisp.add(new LoaiSp("Đăng Xuất", "https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
+                                    loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
+                                    listView.setAdapter(loaiSpAdapter);
+                                }
+                                else {
+                                    mangloaisp.add(new LoaiSp("Đăng Xuất", "https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
+                                    loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
+                                    listView.setAdapter(loaiSpAdapter);
+                                }
                             }
                         }
                 ));
@@ -205,6 +223,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout=findViewById(R.id.drawlayouttrangchu);
         badge=findViewById(R.id.menu_sl);
         frameLayout=findViewById(R.id.framegiohang);
+        search=findViewById(R.id.imgsearch);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inten = new Intent(MainActivity.this,SearchActivity.class);
+                startActivity(inten);
+            }
+        });
         //khoi tao list
         mangloaisp = new ArrayList<>();
 //        // khoi tao adapter

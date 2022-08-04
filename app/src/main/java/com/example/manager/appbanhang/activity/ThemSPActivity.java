@@ -1,8 +1,11 @@
 package com.example.manager.appbanhang.activity;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -50,6 +53,7 @@ public class ThemSPActivity extends AppCompatActivity {
     String mediaPath;
     SanPhamMoi sanPhamSua;
     boolean flag = false;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +105,10 @@ public class ThemSPActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (flag == false){
                     themsanpham();
-                }else {
+
                     suaSanPham();
+                    Intent intent = new Intent(ThemSPActivity.this,QuanLiActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -128,7 +134,7 @@ public class ThemSPActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(str_ten)||TextUtils.isEmpty(str_gia)||TextUtils.isEmpty(str_mota)||TextUtils.isEmpty(str_hinhanh)|| loai==0){
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }else{
-            compositeDisposable.add(apiBanHang.updatesp(str_ten, str_gia,str_hinhanh,str_mota,loai,sanPhamSua.getId())
+            compositeDisposable.add(apiBanHang.updatesp(sanPhamSua.getId(),str_ten, str_gia,str_hinhanh,str_mota,loai)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -186,6 +192,8 @@ public class ThemSPActivity extends AppCompatActivity {
     }
 
     private void themsanpham() {
+
+
         String str_ten = binding.tensanpham.getText().toString().trim();
         String str_gia = binding.giasanpham.getText().toString().trim();
         String str_mota = binding.mota.getText().toString().trim();
@@ -199,7 +207,9 @@ public class ThemSPActivity extends AppCompatActivity {
                     .subscribe(
                             messageModel -> {
                                 if(messageModel.isSuccess()){
-                                    Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ThemSPActivity.this,QuanLiActivity.class);
+                                    Toast.makeText(ThemSPActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                    startActivity(intent);
                                 }else{
                                     Toast.makeText(this, messageModel.getMessage(), Toast.LENGTH_SHORT).show();
                                 }

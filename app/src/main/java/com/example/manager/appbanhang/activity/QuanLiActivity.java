@@ -1,13 +1,17 @@
 package com.example.manager.appbanhang.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -45,6 +49,7 @@ public class QuanLiActivity extends AppCompatActivity {
     SanPhamMoi sanPhamSuaXoa;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,24 +95,47 @@ public class QuanLiActivity extends AppCompatActivity {
     }
 
     private void xoaSanPham() {
-        compositeDisposable.add(apiBanHang.XoaSanPham(sanPhamSuaXoa.getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        messageModel ->  {
-                            if(messageModel.isSuccess()){
-                                Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
-                                getSpMoi();
-                            }else{
-                                Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
-                            }
-                        },
-                        throwable -> {
-                            Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                )
+        AlertDialog.Builder builder = new AlertDialog.Builder(QuanLiActivity.this);
+        builder.setTitle("Xóa").setMessage("Bạn có chắc chắn muốn xóa không ");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                compositeDisposable.add(apiBanHang.XoaSanPham(sanPhamSuaXoa.getId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                messageModel ->  {
+                                    if(messageModel.isSuccess()){
+                                        Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
+                                        getSpMoi();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),messageModel.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                },
+                                throwable -> {
+                                    Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                        )
 
-        );
+                );
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Hủy ", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(QuanLiActivity.this,"Hủy bỏ",
+                        Toast.LENGTH_SHORT).show();
+                //  Cancel
+                dialog.cancel();
+            }
+        });
+        // Create "Neutral" button with OnClickListener.
+//        builder.setNeutralButtonIcon(neutralIcon); // Not working!!!
+        // Create AlertDialog:
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void getSpMoi() {

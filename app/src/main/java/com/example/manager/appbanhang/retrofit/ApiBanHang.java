@@ -66,7 +66,7 @@ public interface ApiBanHang {
 
     @POST("timkiem.php")
     @FormUrlEncoded
-    Observable<MessageModel> search(
+    Observable<SanPhamMoiModel> search(
             @Field("search") String search
     );
 
@@ -89,12 +89,13 @@ public interface ApiBanHang {
     @POST("updatesp.php")
     @FormUrlEncoded
     Observable<MessageModel> updatesp(
+            @Field("id") int id,
             @Field("tensp") String tensp,
             @Field("gia") String gia,
             @Field("hinhanh") String hinhanh,
             @Field("mota") String mota,
-            @Field("loai") int idloai,
-            @Field("id") int id
+            @Field("loai") int idloai
+
     );
 
     @Multipart

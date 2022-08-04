@@ -124,5 +124,17 @@
         android:textSize="17dp"
         android:id="@+id/btndangky"
         android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/btndangky"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:text="Hủy "
+        android:textSize="17dp"
+        android:id="@+id/btnhuy"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

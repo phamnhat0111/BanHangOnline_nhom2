@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/white">
+
             <FrameLayout
                 android:id="@+id/framegiohang"
                 android:layout_marginRight="10dp"
@@ -33,12 +34,21 @@
                     android:layout_height="28dp"
                     android:id="@+id/menu_sl"
                     android:layout_gravity="top|right"/>
+
                 <ImageView
+                    android:layout_gravity=""
                     android:layout_marginTop="15dp"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_baseline_shopping_cart_24"/>
             </FrameLayout>
+            <ImageView
+                android:layout_gravity="right"
+                android:id="@+id/imgsearch"
+                android:layout_margin="15dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_search_24" />
 
         </androidx.appcompat.widget.Toolbar>
 

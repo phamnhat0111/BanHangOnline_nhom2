@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="Thanh Toán"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/purple_200"
+        android:background="@color/mautoolbar"
         android:id="@+id/toolbarthanhtoan"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewTt"

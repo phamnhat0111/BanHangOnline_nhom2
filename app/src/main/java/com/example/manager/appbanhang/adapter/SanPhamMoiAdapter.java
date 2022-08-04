@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
         if (sanPhamMoi.getHinhanh().contains("http")) {
             Glide.with(context).load(sanPhamMoi.getHinhanh()).into(holder.imghinhanh);
         }else{
-            String hinh = Utils.BASE_URL+"image/"+sanPhamMoi.getHinhanh();
+            String hinh = Utils.BASE_URL+"images/"+sanPhamMoi.getHinhanh();
             Glide.with(context).load(hinh).into(holder.imghinhanh);
         }
 
@@ -63,6 +64,7 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
                     Intent intent = new Intent(context, ChiTietActivity.class);
                     intent.putExtra("chitiet",sanPhamMoi);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                     context.startActivity(intent);
                 }else{
                     EventBus.getDefault().postSticky(new SuaXoaEvent(sanPhamMoi));
@@ -94,6 +96,7 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
 
        public void setItemClickListener(ItemClickListener itemClickListener) {
           this.itemClickListener = itemClickListener;
+
         }
 
         @Override
@@ -103,8 +106,10 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add(0,0,getAdapterPosition(),"Sửa");
-            contextMenu.add(0,1,getAdapterPosition(),"Xóa");
+            if(Utils.user_current.getEmail().contains("admin")){
+                contextMenu.add(0,0,getAdapterPosition(),"Sửa");
+                contextMenu.add(0,1,getAdapterPosition(),"Xóa");
+            }
 
 
 

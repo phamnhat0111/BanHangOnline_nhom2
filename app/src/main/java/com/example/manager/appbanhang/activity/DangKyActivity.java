@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DangKyActivity extends AppCompatActivity {
     EditText email, pass, repass,username, mobile;
-    AppCompatButton btndangki;
+    AppCompatButton btndangki,btnhuy;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     //FirebaseApp firebaseApp;
@@ -45,6 +45,12 @@ public class DangKyActivity extends AppCompatActivity {
                 dangKi();
             }
         });
+        btnhuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void dangKi() {
@@ -53,19 +59,15 @@ public class DangKyActivity extends AppCompatActivity {
         String str_repass = repass.getText().toString().trim();
         String str_user = username.getText().toString().trim();
         String str_mobile = mobile.getText().toString().trim();
-        if(TextUtils.isEmpty(str_email)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập email",Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(str_email)|| TextUtils.isEmpty(str_user)
+                ||TextUtils.isEmpty(str_pass)||TextUtils.isEmpty(str_repass)
+        ||TextUtils.isEmpty(str_mobile)){
+            Toast.makeText(getApplicationContext(),"Vui lòng nhập đủ thông tin ",Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(str_user)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập tên tài khoản",Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(str_pass)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập mật khẩu",Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(str_repass)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập lại mật khẩu",Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(str_mobile)){
-            Toast.makeText(getApplicationContext(),"Bạn chưa nhập số điện thoại",Toast.LENGTH_SHORT).show();
+        else if(str_pass.length()<6){
+            Toast.makeText(getApplicationContext(),"Mật Khẩu phải trên 6 kí tự ",Toast.LENGTH_SHORT).show();}
+        else if(str_mobile.length()!=10){
+            Toast.makeText(getApplicationContext(),"Nhập chưa đúng Số điện thoại",Toast.LENGTH_SHORT).show();
         }
         else{
             if(str_pass.equals(str_repass)){
@@ -81,10 +83,10 @@ public class DangKyActivity extends AppCompatActivity {
 //                                        finish();
                                         Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
                                         startActivity(intent);
-                                        Toast.makeText(DangKyActivity.this, "thành công", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DangKyActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
-                                        Toast.makeText(DangKyActivity.this, " Email da ton tai ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DangKyActivity.this, " Email đã có người khác sử dung, vui lòng nhập mail khác ", Toast.LENGTH_SHORT).show();
                                     }
                                 },
                                 throwable -> {
@@ -95,35 +97,10 @@ public class DangKyActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(getApplicationContext(),"Mật khẩu chưa khớp",Toast.LENGTH_SHORT).show();
             }
-//            Intent intent= new Intent(DangKyActivity.this, DangNhapActivity.class);
-//            startActivity(intent);
         }
 
     }
 
-//    private  void postData(String str_email,String str_pass,String str_user,String str_mobile){
-//        // post data
-//        compositeDisposable.add(apiBanHang.dangKi(str_email,str_pass,str_user,str_mobile)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                        userModel -> {
-//                            if(userModel.isSuccess()){
-//                                Utils.user_current.setEmail(str_email);
-//                                Utils.user_current.setPass(str_pass);
-//                                Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
-//                                startActivity(intent);
-//                                finish();
-//                            }else{
-//                                Toast.makeText(getApplicationContext(),userModel.getMessage(),Toast.LENGTH_SHORT).show();
-//                            }
-//                        },
-//                        throwable -> {
-//                            Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
-//                        }
-//                ));
-//
-//    }
 
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
@@ -133,6 +110,7 @@ public class DangKyActivity extends AppCompatActivity {
         username = findViewById(R.id.eduser);
         mobile = findViewById(R.id.edmobile);
         btndangki = findViewById(R.id.btndangky);
+        btnhuy =findViewById(R.id.btnhuy);
     }
     @Override
     protected void onDestroy() {
