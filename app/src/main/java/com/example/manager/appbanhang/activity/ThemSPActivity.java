@@ -105,7 +105,8 @@ public class ThemSPActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (flag == false){
                     themsanpham();
-
+                }
+                else {
                     suaSanPham();
                     Intent intent = new Intent(ThemSPActivity.this,QuanLiActivity.class);
                     startActivity(intent);
