@@ -3,6 +3,7 @@ package com.example.manager.appbanhang.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,12 +51,14 @@ public class QuanLiActivity extends AppCompatActivity {
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     Context context;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_li);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         initView();
+        ActionToolBar();
         initControl();
         getSpMoi();
     }
@@ -71,11 +74,22 @@ public class QuanLiActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        toolbar= findViewById(R.id.toolbar_ql);
         recyclerViewQuanLi = findViewById(R.id.recycleview_ql);
         img_themsp = findViewById(R.id.img_themsp);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
         recyclerViewQuanLi.setHasFixedSize(true);
         recyclerViewQuanLi.setLayoutManager(layoutManager);
+    }
+    private void ActionToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

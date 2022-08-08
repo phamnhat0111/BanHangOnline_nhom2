@@ -107,11 +107,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(laptop);
                         break;
                     case 3:
+                        if(Utils.user_current.getEmail().equals("admin")){
+                        Intent donhang2 = new Intent(getApplicationContext(),XemDonActivity2.class);
+                        startActivity(donhang2);
+                        break;
+                    }
+                    else{
                         Intent donhang = new Intent(getApplicationContext(),XemDonActivity.class);
                         startActivity(donhang);
                         break;
+                    }
                     case 6:
-                        if(Utils.user_current.getEmail().contains("admin")){
+                        if(Utils.user_current.getEmail().equals("admin")){
                             Intent quanli = new Intent(getApplicationContext(),QuanLiActivity.class);
                             startActivity(quanli);
                             break;
@@ -183,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                             if(loaiSpModel.isSuccess()){
                                 Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_SHORT).show();
                                 mangloaisp = loaiSpModel.getResult();
-                                if(Utils.user_current.getEmail().contains("admin")){
+                                if(Utils.user_current.getEmail().equals("admin")){
                                     mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons.flaticon.com/png/512/3273/premium/3273070.png?token=exp=1659624043~hmac=d919ff0ed1d91fb8b72943628b19161d"));
                                     mangloaisp.add(new LoaiSp("Đăng Xuất", "https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
                                     loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);

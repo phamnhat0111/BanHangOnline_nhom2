@@ -63,7 +63,12 @@ public interface ApiBanHang {
     Observable<DonHangModel> xemDonHang(
             @Field("iduser") int iduser
     );
-
+    @POST("updatetinhtrangdon.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateTinhTrang(
+            @Field("id") int id,
+            @Field("trangthai") int trangthai
+    );
     @POST("timkiem.php")
     @FormUrlEncoded
     Observable<SanPhamMoiModel> search(

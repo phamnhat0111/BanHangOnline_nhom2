@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".appbanhang.activity.XemDonActivity2"
+            android:exported="false" />
+        <activity
             android:name=".appbanhang.activity.SearchActivity"
             android:exported="false" />
         <activity

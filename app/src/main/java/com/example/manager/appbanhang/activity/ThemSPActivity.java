@@ -211,8 +211,10 @@ public class ThemSPActivity extends AppCompatActivity {
                                     Intent intent = new Intent(ThemSPActivity.this,QuanLiActivity.class);
                                     Toast.makeText(ThemSPActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
+                                    finish();
                                 }else{
                                     Toast.makeText(this, messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+
                                 }
 
                             },
