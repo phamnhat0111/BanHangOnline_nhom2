@@ -26,14 +26,11 @@ public class DangKyActivity extends AppCompatActivity {
     AppCompatButton btndangki,btnhuy;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    //FirebaseApp firebaseApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_ky);
-         //firebaseApp = FirebaseApp.initializeApp(DangKyActivity.this);
-
         initView();
         initControll();
     }
@@ -71,7 +68,7 @@ public class DangKyActivity extends AppCompatActivity {
         }
         else{
             if(str_pass.equals(str_repass)){
-                compositeDisposable.add(apiBanHang.dangKi(str_email,str_user,str_pass, str_mobile)
+                compositeDisposable.add(apiBanHang.dangKi(str_email,str_pass,str_user, str_mobile)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

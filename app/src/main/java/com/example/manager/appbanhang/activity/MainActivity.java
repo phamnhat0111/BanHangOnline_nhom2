@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_SHORT).show();
                                 mangloaisp = loaiSpModel.getResult();
                                 if(Utils.user_current.getEmail().equals("admin")){
-                                    mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons.flaticon.com/png/512/3273/premium/3273070.png?token=exp=1659624043~hmac=d919ff0ed1d91fb8b72943628b19161d"));
+                                    mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons.flaticon.com/png/512/3273/premium/3273070.png?token=exp=1660126224~hmac=6de847d228395428dcac50df525e5874"));
                                     mangloaisp.add(new LoaiSp("Đăng Xuất", "https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
                                     loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
                                     listView.setAdapter(loaiSpAdapter);
