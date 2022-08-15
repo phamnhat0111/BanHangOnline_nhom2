@@ -10,6 +10,7 @@
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toobar"
         android:background="@color/maunen"
+        app:titleTextColor="@color/white"
         app:title="Chi tiêt sản phẩm"
         app:layout_constraintTop_toTopOf="parent">
         <FrameLayout

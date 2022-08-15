@@ -12,6 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar_ql"
+        app:titleTextColor="@color/white"
         app:title="Quản Lí"
         android:background="@color/mautoolbar">
 

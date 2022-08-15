@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:padding="5dp"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -54,16 +54,18 @@
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="20sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@android:color/darker_gray"
                 android:layout_height="1dp"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                >
                 <ImageView
                     android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_baseline_local_phone_24"
@@ -89,7 +91,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="5dp">
                 <ImageView
                     android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_email_24"
@@ -120,6 +123,7 @@
         android:id="@+id/line1"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nhập địa chỉ nhận hàng "
@@ -137,6 +141,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="25dp"
         android:text="Đặt Hàng"
+        android:textSize="20dp"
         android:id="@+id/btndathang"
         android:background="@drawable/button"
         android:textColor="@color/white"

@@ -144,9 +144,6 @@ public class QuanLiActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-        // Create "Neutral" button with OnClickListener.
-//        builder.setNeutralButtonIcon(neutralIcon); // Not working!!!
-        // Create AlertDialog:
         AlertDialog alert = builder.create();
         alert.show();
 

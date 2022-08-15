@@ -131,17 +131,18 @@ public class ThemSPActivity extends AppCompatActivity {
         String str_ten = binding.tensanpham.getText().toString().trim();
         String str_gia = binding.giasanpham.getText().toString().trim();
         String str_mota = binding.mota.getText().toString().trim();
-        String str_hinhanh = binding.hinhanh .getText().toString().trim();
+        String str_hinhanh = binding.hinhanh.getText().toString().trim();
         if(TextUtils.isEmpty(str_ten)||TextUtils.isEmpty(str_gia)||TextUtils.isEmpty(str_mota)||TextUtils.isEmpty(str_hinhanh)|| loai==0){
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }else{
-            compositeDisposable.add(apiBanHang.updatesp(sanPhamSua.getId(),str_ten, str_gia,str_hinhanh,str_mota,loai)
+            compositeDisposable.add(apiBanHang.updatesp(sanPhamSua.getId(),str_ten, str_gia,str_hinhanh,str_mota,(loai))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             messageModel -> {
                                 if(messageModel.isSuccess()){
                                     Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else{
                                     Toast.makeText(this, messageModel.getMessage(), Toast.LENGTH_SHORT).show();
                                 }

@@ -117,6 +117,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(donhang);
                         break;
                     }
+                    case 4:
+                        Intent thongtin = new Intent(getApplicationContext(),ThongTinActivity.class);
+                        startActivity(thongtin);
+                        break;
+                    case 5:
+                        Intent lienhe = new Intent(getApplicationContext(),LienHeActivity.class);
+                        startActivity(lienhe);
+                        break;
+
                     case 6:
                         if(Utils.user_current.getEmail().equals("admin")){
                             Intent quanli = new Intent(getApplicationContext(),QuanLiActivity.class);
@@ -191,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_SHORT).show();
                                 mangloaisp = loaiSpModel.getResult();
                                 if(Utils.user_current.getEmail().equals("admin")){
-                                    mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons.flaticon.com/png/512/3273/premium/3273070.png?token=exp=1660126224~hmac=6de847d228395428dcac50df525e5874"));
+                                    mangloaisp.add(new LoaiSp("Quản lí","https://cdn-icons-png.flaticon.com/512/1802/1802979.png"));
                                     mangloaisp.add(new LoaiSp("Đăng Xuất", "https://png.pngtree.com/png-vector/20190917/ourlarge/pngtree-logout-icon-vectors-png-image_1737872.jpg"));
                                     loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
                                     listView.setAdapter(loaiSpAdapter);
